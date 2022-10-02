@@ -36,9 +36,10 @@ app.use('/api',userRouter)
 //导入并使用用户信息的路由模块
 const userinfoRouter = require('./router/userinfo')
 app.use('/my',userinfoRouter)
-//导入并使用文章分类的路由模块
+// 导入并使用文章分类路由模块
 const artCateRouter = require('./router/artcate')
-app.use('/my/article',artCateRouter)
+// 为文章分类的路由挂载统一的访问前缀 /my/article
+app.use('/my/article', artCateRouter)
 // 导入并使用文章路由模块
 const articleRouter = require('./router/article')
 // 为文章的路由挂载统一的访问前缀 /my/article
@@ -49,7 +50,7 @@ app.use((err,req,res,next) => {
     //验证失败导致的出错误
     if(err instanceof joi.ValidationError) return res.cc(err)
     //身份认证失败后的错误
-    if(err.name === 'UnauthorizedError') return res.cc('身份认证失败')
+    if(err.name === 'UnauthorizedError') return res.cc('身份认证失败！')
     //未知的错误
     res.cc(err)
 })
